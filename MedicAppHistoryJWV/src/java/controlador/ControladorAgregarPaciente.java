@@ -7,11 +7,14 @@ package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.ModeloPaciente;
+import modelo.administrarPaciente;
 
 /**
  *
@@ -19,7 +22,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ControladorAgregarPaciente", urlPatterns = {"/ControladorAgregarPaciente"})
 public class ControladorAgregarPaciente extends HttpServlet {
-
+    
+    String add="index.xhtml";
+    ModeloPaciente p = new ModeloPaciente();
+    administrarPaciente ad = new administrarPaciente();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,7 +52,39 @@ public class ControladorAgregarPaciente extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+@Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+String acceso="";
+String action= request.getParameter("accion");
+
+    if(action.equalsIgnoreCase("index"))
+    {
+        acceso = add;
+        
+    }else if(action.equalsIgnoreCase("Guardar"))
+    {
+        String nm= request.getParameter("nombre");
+        String ap = request.getParameter("app");
+        String apm = request.getParameter("apm");
+       float al = Integer.parseInt(request.getParameter("altura"));
+        int ed = Integer.parseInt(request.getParameter("edad"));
+        String fecha = request.getParameter("fecha");
+        float peso = Integer.parseInt(request.getParameter("peso"));
+        String no = request.getParameter("no_seguro");
+        p.setNombre(nm);
+        p.setApp(ap);
+        p.setApm(apm);
+        p.setAltura(al);
+        p.setEdad(ed);
+        p.setFechaNacimiento(fecha);
+        p.setPeso(peso);
+        p.setSeguro_social(no);
+        
+        ad.ingresar(p);
+    }
+    RequestDispatcher vista = request.getRequestDispatcher(acceso);
+    vista.forward(request, response);
+}// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -55,12 +93,6 @@ public class ControladorAgregarPaciente extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
