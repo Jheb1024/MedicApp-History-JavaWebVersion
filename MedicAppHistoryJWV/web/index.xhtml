@@ -3,23 +3,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-        xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
         Bienvenido a MedicApp - History
         <br />
-        <p:fieldset legend="Inicio de Sesión">
-            <p:panelGrid columns="2">
-                <p:outputLabel for="txtUser" value="Usuario"></p:outputLabel>
-                <p:inputText id="txtUser" required="true"/>
-                <p:outputLabel for="txtPassword" value="Contraseña"></p:outputLabel>
-                <p:password id="txtPassword" required="true"/>
-                <p:column/>
-                <p:commandButton value="Ingresar" icon="ui-icon-key"/>
-            </p:panelGrid>
-        </p:fieldset>
+        <h:form>
+            <h:panelGrid columns="3">
+                <h:outputText value="Usuario" />
+                <h:inputText id="username" value="#{Login.username}" required="true" 
+                             validatorMessage="Minimo 2 caracteres!"
+                             requiredMessage="Value is required!" >
+                    <f:validateLength minimum="2" />
+                </h:inputText>
+                <h:message for="username" styleClass="error"/>
+                <h:outputText value="Clave" />
+                <h:inputText value="#{Login.password}" />
+                <h:commandButton value="Entrar" action="#{Login.submit}"
+                                 actionListener="#{Login.onLogin}" />
+            </h:panelGrid>
+            <p>Message: ${Login.mensaje}</p>
+        </h:form>
     </h:body>
 </html>
 
