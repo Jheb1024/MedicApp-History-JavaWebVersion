@@ -21,11 +21,9 @@ public class Conexion {
     private Connection con = null;
     
     public Connection getConexion() throws ClassNotFoundException{
-        
-        
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1/doctores","root","");
+            con = (Connection) DriverManager.getConnection(this.url, this.user, this.password);
         }catch(SQLException e){
             System.err.print(e);
         }
