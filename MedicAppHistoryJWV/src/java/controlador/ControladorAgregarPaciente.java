@@ -23,7 +23,7 @@ import modelo.administrarPaciente;
 @WebServlet(name = "ControladorAgregarPaciente", urlPatterns = {"/ControladorAgregarPaciente"})
 public class ControladorAgregarPaciente extends HttpServlet {
     
-    String add="index.xhtml";
+    String add="agregar_paciente.xhtml";
     ModeloPaciente p = new ModeloPaciente();
     administrarPaciente ad = new administrarPaciente();
     /**
@@ -57,7 +57,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 String acceso="";
 String action= request.getParameter("accion");
 
-    if(action.equalsIgnoreCase("index"))
+    if(action.equalsIgnoreCase("agregar_paciente"))
     {
         acceso = add;
         
