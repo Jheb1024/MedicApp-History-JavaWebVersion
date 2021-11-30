@@ -7,11 +7,16 @@ package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.AdministrarPaciente;
 
 /**
  *
@@ -30,10 +35,10 @@ public class ControladorConsulta extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            /* TODO output your page here. You may use following sample code. 
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -41,9 +46,21 @@ public class ControladorConsulta extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ControladorConsulta at " + request.getContextPath() + "</h1>");
+            out.println("<h2>"+request.getParameter("sintomas")+"</h2>");
             out.println("</body>");
-            out.println("</html>");
+            out.println("</html>");*/
         }
+        String sintomas = request.getParameter("sintomas");
+            String enfermedad = request.getParameter("enfermedad");
+            String fechaLlegada = LocalDate.now().toString();
+            String medicacion = request.getParameter("medicacion");
+            String nombrePaciente = "Juanito1"; 
+            String presionArterial = request.getParameter("presion");
+            float temperatura = Float.parseFloat(request.getParameter("temperatura"));
+           float costo = Float.parseFloat(request.getParameter("costo"));
+            AdministrarPaciente administrarPaciente = new AdministrarPaciente();
+            administrarPaciente.crearConsultaPaciente(1, enfermedad, sintomas, fechaLlegada, medicacion, nombrePaciente, presionArterial, temperatura, costo);
+            notificarConsultaGuardada();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -58,7 +75,13 @@ public class ControladorConsulta extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ControladorConsulta.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ControladorConsulta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -72,7 +95,13 @@ public class ControladorConsulta extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ControladorConsulta.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ControladorConsulta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -84,5 +113,10 @@ public class ControladorConsulta extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void notificarConsultaGuardada() {
+        
+        
+    }
 
 }
