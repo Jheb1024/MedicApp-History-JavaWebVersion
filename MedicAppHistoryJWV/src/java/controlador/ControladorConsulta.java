@@ -60,7 +60,6 @@ public class ControladorConsulta extends HttpServlet {
            float costo = Float.parseFloat(request.getParameter("costo"));
             AdministrarPaciente administrarPaciente = new AdministrarPaciente();
             administrarPaciente.crearConsultaPaciente(1, enfermedad, sintomas, fechaLlegada, medicacion, nombrePaciente, presionArterial, temperatura, costo);
-            
             notificarConsultaGuardada();
     }
 
